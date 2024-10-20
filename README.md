@@ -69,9 +69,4 @@ This project is licensed under the MIT License.
 
 ---
 
-## Contact
-
-For any questions, feel free to reach out to the project maintainer at your-email@example.com.
-
-
 <div align='center'><a href='https://www.websitecounterfree.com'><img src='https://www.websitecounterfree.com/c.php?d=9&id=60461&s=12' border='0' alt='Free Website Counter'></a><br / ><small><a href='https://www.websitecounterfree.com' title="Free Website Counter">Free Website Counter</a></small></div>
