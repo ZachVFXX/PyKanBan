@@ -1,6 +1,7 @@
+import os
 import sqlite3
 
-DATABASE_PATH = "PyKanBan.db"
+DATABASE_PATH = "database/PyKanBan.db"
 
 def initialize_database():
     """Initialize the database, creating tables if they don't exist."""
@@ -12,6 +13,9 @@ def initialize_database():
         create_column("Done", 1)
 
 def create_database():
+    if not os.path.exists("database"):
+        os.makedirs("database")
+
     conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
 

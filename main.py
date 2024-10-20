@@ -11,7 +11,6 @@ DELETE_IMG = ctk.CTkImage(Image.open("assets/delete_task.png"), size=(24, 24))
 ADD_IMG = ctk.CTkImage(Image.open("assets/add_task.png"), size=(24, 24))
 MORE_IMG = ctk.CTkImage(Image.open("assets/more_task.png"), size=(24, 24))
 
-
 class DraggableTask(ctk.CTkFrame):
     def __init__(self, master, text, id, app):
         super().__init__(master, border_width=2)
@@ -20,10 +19,13 @@ class DraggableTask(ctk.CTkFrame):
         self.app = app
         self.text = text
         self.id = id
-        self.label = ctk.CTkLabel(self, text=text, wraplength=150, anchor="e", justify="left")
+
+        self.label = ctk.CTkLabel(self, text=text, wraplength=150, anchor="e", justify="left", font=FONT)
         self.label.grid(row=0, column=0, rowspan=5, padx=16, pady=8, sticky="nsw")
+
         self.edit_button = ctk.CTkButton(self, text="", image=EDIT_IMG, command=self.edit_task, width=48)
         self.edit_button.grid(row=1, column=1, padx=8, pady=(8, 4), sticky="e", columnspan=2)
+
         self.delete_button = ctk.CTkButton(self, text="", image=DELETE_IMG, command=self.delete, width=48)
         self.delete_button.grid(row=2, column=1, padx=8, pady=(4, 8), sticky="e", columnspan=2)
 
@@ -44,7 +46,7 @@ class DraggableTask(ctk.CTkFrame):
         print("SAVED")
 
     def edit_task(self):
-        task_dialog = TaskDialog(self)
+        task_dialog = TaskDialog(self, "Edit Task", "Enter the new task description:", "Save edit")
         task_dialog.update()
         task_dialog.focus()
         self.wait_window(task_dialog)
@@ -55,7 +57,6 @@ class DraggableTask(ctk.CTkFrame):
 
     def edit(self, current_column):
         database.modify_task(self.id, self.text, current_column)
-        print("EDITED", self.text, current_column, self.id)
 
     def delete(self):
         database.delete_task(self.text)
@@ -76,8 +77,6 @@ class DraggableTask(ctk.CTkFrame):
         relative_x = pointer_x - app_x
         relative_y = pointer_y - app_y
 
-        print(relative_x, relative_y)
-
         self.initial_master = self.master
         self.lift()
 
@@ -86,7 +85,7 @@ class DraggableTask(ctk.CTkFrame):
         self.dummy = ctk.CTkFrame(self.app, width=self.winfo_width(), height=self.winfo_height(), border_width=2)
         self.dummy.grid_columnconfigure(2, weight=1)
         self.dummy.grid_rowconfigure(2, weight=1)
-        self.label = ctk.CTkLabel(self.dummy, text=self.text, wraplength=150, anchor="e", justify="left")
+        self.label = ctk.CTkLabel(self.dummy, text=self.text, wraplength=150, anchor="e", justify="left", font=FONT)
         self.label.grid(row=0, column=0, rowspan=5, padx=16, pady=8, sticky="nsw")
         self.edit_button = ctk.CTkButton(self.dummy, text="", image=EDIT_IMG, width=48)
         self.edit_button.grid(row=1, column=1, padx=8, pady=(8, 4), sticky="e", columnspan=2)
@@ -110,7 +109,6 @@ class DraggableTask(ctk.CTkFrame):
         relative_x = pointer_x - app_x
         relative_y = pointer_y - app_y
 
-        print(relative_x, relative_y)
         self.dummy.place(x=relative_x - self.drag_start_x,
                          y=relative_y - self.drag_start_y)  # Move the dummy to follow the cursor
         self.lift()  # Keep the task on top during the drag
@@ -150,17 +148,17 @@ class KanbanColumn(ctk.CTkFrame):
         self.app = app
         self.title = title
 
-        self.title_label = ctk.CTkLabel(self, text=title, font=("Arial", 16, "bold"))
+        self.title_label = ctk.CTkLabel(self, text=title, font=BOLD_FONT)
         self.title_label.pack(pady=10)
 
         self.task_frame = ctk.CTkScrollableFrame(self)
         self.task_frame.pack(fill="both", expand=True, padx=4, pady=4)
 
-        self.add_task_button = ctk.CTkButton(self, text="Add Task", image=ADD_IMG, command=self.add_task)
+        self.add_task_button = ctk.CTkButton(self, text="Add Task", image=ADD_IMG, command=self.add_task, font=FONT)
         self.add_task_button.pack(pady=10)
 
     def add_task(self):
-        task_dialog = TaskDialog(self)
+        task_dialog = TaskDialog(self, "Add Task", "Enter task description:", "Add")
         task_dialog.update()
         task_dialog.focus()
         self.wait_window(task_dialog)
@@ -172,19 +170,19 @@ class KanbanColumn(ctk.CTkFrame):
 
 
 class TaskDialog(ctk.CTkToplevel):
-    def __init__(self, parent):
+    def __init__(self, parent, title, description, button_text):
         super().__init__(parent)
-        self.title("Add Task")
+        self.title(title)
         self.geometry("300x150")
         self.task_text = None
 
-        self.label = ctk.CTkLabel(self, text="Enter task description:")
+        self.label = ctk.CTkLabel(self, text=description)
         self.label.pack(pady=10)
 
         self.entry = ctk.CTkEntry(self, width=200)
         self.entry.pack(pady=10)
 
-        self.button = ctk.CTkButton(self, text="Add", command=self.on_add)
+        self.button = ctk.CTkButton(self, text=button_text, command=self.on_add)
         self.button.pack(pady=10)
 
     def on_add(self):
@@ -201,29 +199,19 @@ class App(ctk.CTk):
         self.resizable(True, True)
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
 
+        global FONT
+        FONT = ctk.CTkFont(family="Poppins", size=16)
+        global BOLD_FONT
+        BOLD_FONT = ctk.CTkFont(family="Poppins", size=16, weight="bold")
+
         initialize_database()
-        self.menu_bar = ctk.CTkFrame(self, height=30)
-        self.menu_bar.grid(row=0, column=0, columnspan=1000, padx=4, pady=(4, 2), sticky="nsew")
 
-        self.file_button = ctk.CTkButton(self, text=database.get_kanban_name(1))
-        self.file_button.grid(row=0, column=0, padx=4, pady=4, sticky="nsew")
-        dropdown1 = CustomDropdownMenu(widget=self.file_button)
-        dropdown1.add_option(option="New KanBan", command=self.create_new_kanban)
-
-        submenu = dropdown1.add_submenu(submenu_name="Open KanBan")
-        for kanban in database.get_kanbans():
-            submenu.add_option(option=kanban, command=lambda e=kanban[0]: self.switch_kanban(e))
-
-        dropdown1.add_option(option="Rename current Kanban", command=lambda: self.rename_kanban(self.kanban_id))
-
-        dropdown1.add_option(option="Delete current Kanban", command=lambda: self.delete_kanban(self.kanban_id))
-
-        dropdown1.add_option(option="Quit", command=lambda: self.on_closing())
+        self.create_menu_bar()
 
         self.create_kanban(1)
 
     def rename_kanban(self, kanban_id):
-        task_dialog = TaskDialog(self)
+        task_dialog = TaskDialog(self, "Rename Kanban", "Enter the new name:", "Save edit")
         task_dialog.update()
         task_dialog.focus()
         self.wait_window(task_dialog)
@@ -264,7 +252,7 @@ class App(ctk.CTk):
         self.create_kanban(kanban_id)
 
     def create_new_kanban(self):
-        task_dialog = TaskDialog(self)
+        task_dialog = TaskDialog(self, "Create Kanban", "Enter the name of the new kanban:", "Create")
         task_dialog.update()
         task_dialog.focus()
         self.wait_window(task_dialog)
@@ -297,6 +285,22 @@ class App(ctk.CTk):
 
     def on_closing(self):
         self.destroy()
+
+    def create_menu_bar(self):
+        self.file_button = ctk.CTkButton(self, text=database.get_kanban_name(1), font=FONT)
+        self.file_button.grid(row=0, column=0, padx=4, pady=4, sticky="nsew")
+        dropdown1 = CustomDropdownMenu(widget=self.file_button)
+        dropdown1.add_option(option="New KanBan", command=self.create_new_kanban)
+
+        submenu = dropdown1.add_submenu(submenu_name="Open KanBan")
+        for kanban in database.get_kanbans():
+            submenu.add_option(option=kanban[1], command=lambda e=kanban[0]: self.switch_kanban(e))
+
+        dropdown1.add_option(option="Rename current Kanban", command=lambda: self.rename_kanban(self.kanban_id))
+
+        dropdown1.add_option(option="Delete current Kanban", command=lambda: self.delete_kanban(self.kanban_id))
+
+        dropdown1.add_option(option="Quit", command=lambda: self.on_closing())
 
 
 if __name__ == "__main__":
