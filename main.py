@@ -2,7 +2,6 @@ import os
 import sys
 import time
 
-import customtkinter
 import customtkinter as ctk
 from CTkMenuBar import CustomDropdownMenu
 from PIL import Image
@@ -93,8 +92,6 @@ class DraggableTask(ctk.CTkFrame):
         self.initial_master = self.master
         self.lift()
 
-        self.app.fade_out(self.winfo_id(), to=50)
-
         # Create a dummy task to follow the mouse during dragging
 
         self.dummy = ctk.CTkFrame(self.app, width=self.winfo_width(), height=self.winfo_height(), border_width=2)
@@ -106,7 +103,7 @@ class DraggableTask(ctk.CTkFrame):
         self.edit_button.grid(row=1, column=1, padx=8, pady=(8, 4), sticky="e", columnspan=2)
         self.delete_button = ctk.CTkButton(self.dummy, text="", image=DELETE_IMG, width=48)
         self.delete_button.grid(row=2, column=1, padx=8, pady=(4, 8), sticky="e", columnspan=2)
-        self.app.fade_in(self.dummy.winfo_id(), to=50)
+        pywinstyles.set_opacity(self.dummy.winfo_id(), value=0.5)
         self.dummy.place(x=self.get_position()[0] - self.drag_start_x,
                          y=self.get_position()[1] - self.drag_start_y)
 
@@ -118,7 +115,7 @@ class DraggableTask(ctk.CTkFrame):
                 if self.dummy_task is None:
                     self.dummy_task = DraggableTask(column.task_frame, self.text, self.id, self)  # Create a new task
                     self.dummy_task.pack(fill="x", padx=5, pady=2)  # Pack the task into the new column
-                    self.app.fade_in(self.dummy_task.winfo_id(), to=70)
+                    pywinstyles.set_opacity(self.dummy_task.winfo_id(), value=0.7)
                 elif self.dummy_task is not None and self.last_column != column.title:
                     self.dummy_task.destroy()
                     self.dummy_task = None
@@ -128,6 +125,7 @@ class DraggableTask(ctk.CTkFrame):
                     self.dummy_task.destroy()
                     self.dummy_task = None
                 self.last_column = column.title
+                self.update()
 
     def on_drag(self, event):
         self.dummy.place(x=self.get_position()[0] - self.drag_start_x,
@@ -142,9 +140,8 @@ class DraggableTask(ctk.CTkFrame):
             self.dummy_task.destroy()
             self.dummy_task = None
             self.app.handle_drop(self, event)
-        except:
-            print("Error")
-
+        except Exception as e:
+            print(f"Error: {e}")
 
 class KanbanColumn(ctk.CTkFrame):
     def __init__(self, master, title, app):
@@ -198,7 +195,7 @@ class TaskDialog(ctk.CTkToplevel):
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
-        customtkinter.deactivate_automatic_dpi_awareness()  # Its messed up with the drag and drop
+        ctk.deactivate_automatic_dpi_awareness()  # Its messed up with the drag and drop
         self.title("PyKanBan")
         self.geometry("800x600")
         self.resizable(True, True)
