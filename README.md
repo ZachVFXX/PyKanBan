@@ -20,7 +20,7 @@ This is a simple and usable **Kanban Board** application built using `CustomTkin
 
 1. **Clone the Repository**
     ```bash
-    git clone https://github.com/yourusername/PyKanBan.git
+    git clone https://github.com/ZachVFXX/PyKanBan.git
     cd pykanban
     ```
 
