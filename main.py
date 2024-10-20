@@ -1,15 +1,17 @@
+import time
+
 import customtkinter
 import customtkinter as ctk
 from CTkMenuBar import CustomDropdownMenu
 from PIL import Image
 import pywinstyles
 import database
-from database import initialize_database
 
 EDIT_IMG = ctk.CTkImage(Image.open("assets/edit_task.png"), size=(24, 24))
 DELETE_IMG = ctk.CTkImage(Image.open("assets/delete_task.png"), size=(24, 24))
 ADD_IMG = ctk.CTkImage(Image.open("assets/add_task.png"), size=(24, 24))
 MORE_IMG = ctk.CTkImage(Image.open("assets/more_task.png"), size=(24, 24))
+
 
 class DraggableTask(ctk.CTkFrame):
     def __init__(self, master, text, id, app):
@@ -60,12 +62,10 @@ class DraggableTask(ctk.CTkFrame):
 
     def delete(self):
         database.delete_task(self.text)
+        self.app.fade_out(self.winfo_id())
         self.destroy()
 
-    def start_drag(self, event):
-        self.drag_start_x = event.x
-        self.drag_start_y = event.y
-        # Get the mouse pointer's position relative to the app window
+    def get_position(self):
         pointer_x = self.winfo_pointerx()
         pointer_y = self.winfo_pointery()
 
@@ -76,6 +76,11 @@ class DraggableTask(ctk.CTkFrame):
         # Calculate the position relative to the app window
         relative_x = pointer_x - app_x
         relative_y = pointer_y - app_y
+        return relative_x, relative_y
+
+    def start_drag(self, event):
+        self.drag_start_x = event.x
+        self.drag_start_y = event.y
 
         self.initial_master = self.master
         self.lift()
@@ -91,28 +96,11 @@ class DraggableTask(ctk.CTkFrame):
         self.edit_button.grid(row=1, column=1, padx=8, pady=(8, 4), sticky="e", columnspan=2)
         self.delete_button = ctk.CTkButton(self.dummy, text="", image=DELETE_IMG, width=48)
         self.delete_button.grid(row=2, column=1, padx=8, pady=(4, 8), sticky="e", columnspan=2)
-        pywinstyles.set_opacity(self.dummy, value=0.5)
-        self.dummy.place(x=relative_x - self.drag_start_x,
-                         y=relative_y - self.drag_start_y)
+        pywinstyles.set_opacity(self.dummy.winfo_id(), value=0.5)
+        self.dummy.place(x=self.get_position()[0] - self.drag_start_x,
+                         y=self.get_position()[1] - self.drag_start_y)
 
-    def on_drag(self, event):
-        # Move the dummy task along with the mouse
-        # Get the mouse pointer's position relative to the app window
-        pointer_x = self.winfo_pointerx()
-        pointer_y = self.winfo_pointery()
-
-        # Get the app window's top-left corner position relative to the screen
-        app_x = self.app.winfo_rootx()
-        app_y = self.app.winfo_rooty()
-
-        # Calculate the position relative to the app window
-        relative_x = pointer_x - app_x
-        relative_y = pointer_y - app_y
-
-        self.dummy.place(x=relative_x - self.drag_start_x,
-                         y=relative_y - self.drag_start_y)  # Move the dummy to follow the cursor
-        self.lift()  # Keep the task on top during the drag
-
+    def get_current_column(self):
         x = self.app.winfo_pointerx() - self.app.winfo_rootx()
         y = self.app.winfo_pointery() - self.app.winfo_rooty()
         for column in self.app.columns:
@@ -120,7 +108,7 @@ class DraggableTask(ctk.CTkFrame):
                 if self.dummy_task is None:
                     self.dummy_task = DraggableTask(column.task_frame, self.text, self.id, self)  # Create a new task
                     self.dummy_task.pack(fill="x", padx=5, pady=2)  # Pack the task into the new column
-                    pywinstyles.set_opacity(self.dummy_task, value=0.7)
+                    self.app.fade_in(self.dummy_task.winfo_id(), to=70)
                 elif self.dummy_task is not None and self.last_column != column.title:
                     self.dummy_task.destroy()
                     self.dummy_task = None
@@ -131,10 +119,16 @@ class DraggableTask(ctk.CTkFrame):
                     self.dummy_task = None
                 self.last_column = column.title
 
+    def on_drag(self, event):
+        self.dummy.place(x=self.get_position()[0] - self.drag_start_x,
+                         y=self.get_position()[1] - self.drag_start_y)  # Move the dummy to follow the cursor
+        self.get_current_column()
+
     def stop_drag(self, event):
         # After stopping the drag, handle the drop and remove the dummy
         try:
             self.dummy.destroy()
+            self.dummy = None
             self.dummy_task.destroy()
             self.dummy_task = None
             self.app.handle_drop(self, event)
@@ -167,6 +161,7 @@ class KanbanColumn(ctk.CTkFrame):
             if id:
                 task = DraggableTask(self.task_frame, task_dialog.task_text, id, self.app)
                 task.pack(fill="x", padx=5, pady=2)
+                self.app.fade_in(task.winfo_id())
 
 
 class TaskDialog(ctk.CTkToplevel):
@@ -204,7 +199,7 @@ class App(ctk.CTk):
         global BOLD_FONT
         BOLD_FONT = ctk.CTkFont(family="Poppins", size=16, weight="bold")
 
-        initialize_database()
+        database.initialize_database()
 
         self.create_menu_bar()
 
@@ -272,10 +267,12 @@ class App(ctk.CTk):
         for column in self.columns:
             if column.winfo_x() <= x <= column.winfo_x() + column.winfo_width():
                 print("IN A COLUMN", column.title)
+                self.fade_out(task.winfo_id())
                 task.place_forget()  # Remove it from the current place
                 task.pack_forget()  # Remove it from the current pack geometry manager
                 task = DraggableTask(column.task_frame, task.text, task.id, self)  # Create a new task
                 task.pack(fill="x", padx=5, pady=2)  # Pack the task into the new column
+                self.fade_in(task.winfo_id())
                 task.edit(column.title)
                 break
         else:
@@ -301,6 +298,22 @@ class App(ctk.CTk):
         dropdown1.add_option(option="Delete current Kanban", command=lambda: self.delete_kanban(self.kanban_id))
 
         dropdown1.add_option(option="Quit", command=lambda: self.on_closing())
+
+    def fade_out(self, widget, from_=100, to=0):
+        for i in range(from_, to, -10):
+            if not self.winfo_exists():
+                break
+            pywinstyles.set_opacity(widget, value=i / 100)
+            self.update()
+            time.sleep(1 / 100)
+
+    def fade_in(self, widget, from_=0, to=100):
+        for i in range(from_, to, 10):
+            if not self.winfo_exists():
+                break
+            pywinstyles.set_opacity(widget, value=i / 100)
+            self.update()
+            time.sleep(1 / 100)
 
 
 if __name__ == "__main__":
