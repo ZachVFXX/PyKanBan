@@ -1,3 +1,5 @@
+import os
+import sys
 import time
 
 import customtkinter
@@ -7,10 +9,16 @@ from PIL import Image
 import pywinstyles
 import database
 
-EDIT_IMG = ctk.CTkImage(Image.open("assets/edit_task.png"), size=(24, 24))
-DELETE_IMG = ctk.CTkImage(Image.open("assets/delete_task.png"), size=(24, 24))
-ADD_IMG = ctk.CTkImage(Image.open("assets/add_task.png"), size=(24, 24))
-MORE_IMG = ctk.CTkImage(Image.open("assets/more_task.png"), size=(24, 24))
+
+def resource(relative_path):
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+
+EDIT_IMG = ctk.CTkImage(Image.open(resource("assets/edit_task.png")), size=(24, 24))
+DELETE_IMG = ctk.CTkImage(Image.open(resource("assets/delete_task.png")), size=(24, 24))
+ADD_IMG = ctk.CTkImage(Image.open(resource("assets/add_task.png")), size=(24, 24))
+MORE_IMG = ctk.CTkImage(Image.open(resource("assets/more_task.png")), size=(24, 24))
 
 
 class DraggableTask(ctk.CTkFrame):
