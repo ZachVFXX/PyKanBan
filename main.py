@@ -85,6 +85,8 @@ class DraggableTask(ctk.CTkFrame):
         self.initial_master = self.master
         self.lift()
 
+        self.app.fade_out(self.winfo_id(), to=50)
+
         # Create a dummy task to follow the mouse during dragging
 
         self.dummy = ctk.CTkFrame(self.app, width=self.winfo_width(), height=self.winfo_height(), border_width=2)
@@ -96,7 +98,7 @@ class DraggableTask(ctk.CTkFrame):
         self.edit_button.grid(row=1, column=1, padx=8, pady=(8, 4), sticky="e", columnspan=2)
         self.delete_button = ctk.CTkButton(self.dummy, text="", image=DELETE_IMG, width=48)
         self.delete_button.grid(row=2, column=1, padx=8, pady=(4, 8), sticky="e", columnspan=2)
-        pywinstyles.set_opacity(self.dummy.winfo_id(), value=0.5)
+        self.app.fade_in(self.dummy.winfo_id(), to=50)
         self.dummy.place(x=self.get_position()[0] - self.drag_start_x,
                          y=self.get_position()[1] - self.drag_start_y)
 
@@ -216,8 +218,7 @@ class App(ctk.CTk):
 
     def delete_kanban(self, kanban_id):
         database.delete_kanban(kanban_id)
-        for column in self.columns:
-            column.destroy()
+        self.destroy_columns()
 
     def create_kanban(self, kanban_id):
         self.columns = []
@@ -235,15 +236,25 @@ class App(ctk.CTk):
                 task.pack(fill="x", padx=5, pady=2)
         for i, column in enumerate(self.columns):
             column.grid(row=1, column=i, padx=4, pady=4, sticky="nsew")
+            pywinstyles.set_opacity(column.winfo_id(), value=0.0)
             self.grid_columnconfigure(i, weight=1)
         self.grid_rowconfigure(1, weight=1)
+        for column in self.columns:
+            self.fade_in(column.winfo_id())
         self.kanban_id = kanban_id
         self.title(f'Kanban - {database.get_kanban_name(kanban_id)}')
         self.file_button.configure(text=database.get_kanban_name(kanban_id))
 
+    def destroy_columns(self):
+        print(self.columns)
+        if self.columns is not None:
+            for column in self.columns:
+                self.fade_out(column.winfo_id())
+                column.destroy()
+                self.columns = []
+
     def switch_kanban(self, kanban_id):
-        for column in self.columns:
-            column.destroy()
+        self.destroy_columns()
         self.create_kanban(kanban_id)
 
     def create_new_kanban(self):
