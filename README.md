@@ -8,7 +8,6 @@ https://github.com/user-attachments/assets/47ad02ea-d0a3-4389-b5a7-cbfb8fe88825
 
 ![Simple UI](https://github.com/ZachVFXX/PyKanBan/blob/master/pictures/simple%20ui%20.png)
 ![Simple Menu](https://github.com/ZachVFXX/PyKanBan/blob/master/pictures/simple%20menu.png)
-![FullScreen](https://github.com/ZachVFXX/PyKanBan/blob/master/pictures/fully%20%20resizable.png)
 
 ---
 
@@ -35,6 +34,7 @@ https://github.com/user-attachments/assets/47ad02ea-d0a3-4389-b5a7-cbfb8fe88825
     ```bash
     pip install customtkinter pywinstyle sqlite3 CTkMenuBar
     ```
+    Install the Poppins font from [here](https://fonts.google.com/specimen/Poppins)
 
 3. **Run the Application**
     After installing the dependencies, you can run the application with:
