@@ -4,8 +4,7 @@
 
 This is a simple and usable **Kanban Board** application built using `CustomTkinter`, `pywinstyle`, and `sqlite3`. The application allows users to organize their tasks into customizable columns, manage their workflow visually, and store task data persistently in a local SQLite database.
 
-
-https://github.com/user-attachments/assets/c7c3f40b-2f8c-4f7f-b357-20919c77ded1
+https://github.com/user-attachments/assets/47ad02ea-d0a3-4389-b5a7-cbfb8fe88825
 
 ![Simple UI](https://github.com/ZachVFXX/PyKanBan/blob/master/pictures/simple%20ui%20.png)
 ![Simple Menu](https://github.com/ZachVFXX/PyKanBan/blob/master/pictures/simple%20menu.png)
