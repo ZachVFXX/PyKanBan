@@ -4,20 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54de9c10-b255-44b5-86e9-0e5d28b94e58" name="Changes" comment="xxx">
-      <change afterPath="$PROJECT_DIR$/.idea/PyKanBan.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PyKanBan.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/add_task.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/delete_task.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/edit_task.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/more_task.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
+    <list default="true" id="54de9c10-b255-44b5-86e9-0e5d28b94e58" name="Changes" comment="animation suppression et addition de kanban">
+      <change afterPath="$PROJECT_DIR$/animation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/icon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/output/PyKanBan.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/setting.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/ctk_calender.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/ctk_column.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/ctk_dialog.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/ctk_kanban.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/ctk_task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PyKanBan.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PyKanBan.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,20 +62,49 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.database.executor&quot;: &quot;Run&quot;,
     &quot;Python.jhkfjf.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/hxcke/PycharmProjects/PyKanBan/assets&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hxcke/PycharmProjects/PyKanBan/assets&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\hxcke\PycharmProjects\PyKanBan\assets" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hxcke\PycharmProjects\PyKanBan\output\database" />
+      <recent name="C:\Users\hxcke\PycharmProjects\PyKanBan\ui" />
+      <recent name="C:\Users\hxcke\PycharmProjects\PyKanBan\database" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
+    <configuration name="database" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PyKanBan" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/database.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PyKanBan" />
       <option name="ENV_FILES" value="" />
@@ -101,6 +130,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.database" />
       </list>
     </recent_temporary>
   </component>
@@ -128,12 +158,66 @@
       <option name="project" value="LOCAL" />
       <updated>1729352653810</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="premier commit avec toute la base du project (foncitonnelle)">
+      <option name="closed" value="true" />
+      <created>1729439282219</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1729439282219</updated>
+    </task>
+    <task id="LOCAL-00003" summary="deuxieme commit avec quelque modif">
+      <option name="closed" value="true" />
+      <created>1729441330833</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1729441330833</updated>
+    </task>
+    <task id="LOCAL-00004" summary="animation suppression et addition de kanban">
+      <option name="closed" value="true" />
+      <created>1729445745498</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1729445745498</updated>
+    </task>
+    <task id="LOCAL-00005" summary="animation suppression et addition de kanban">
+      <option name="closed" value="true" />
+      <created>1729447397582</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1729447397582</updated>
+    </task>
+    <task id="LOCAL-00006" summary="animation suppression et addition de kanban">
+      <option name="closed" value="true" />
+      <created>1729456225380</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1729456225380</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="xxx" />
-    <option name="LAST_COMMIT_MESSAGE" value="xxx" />
+    <MESSAGE value="premier commit avec toute la base du project (foncitonnelle)" />
+    <MESSAGE value="deuxieme commit avec quelque modif" />
+    <MESSAGE value="animation suppression et addition de kanban" />
+    <option name="LAST_COMMIT_MESSAGE" value="animation suppression et addition de kanban" />
   </component>
 </project>

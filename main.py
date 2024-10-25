@@ -1,195 +1,12 @@
-import os
-import sys
-import time
-
-import customtkinter as ctk
 from CTkMenuBar import CustomDropdownMenu
-from PIL import Image
 import pywinstyles
 import database
 
-
-def resource(relative_path):
-    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(base_path, relative_path)
-
-
-EDIT_IMG = ctk.CTkImage(Image.open(resource("assets/edit_task.png")), size=(24, 24))
-DELETE_IMG = ctk.CTkImage(Image.open(resource("assets/delete_task.png")), size=(24, 24))
-ADD_IMG = ctk.CTkImage(Image.open(resource("assets/add_task.png")), size=(24, 24))
-MORE_IMG = ctk.CTkImage(Image.open(resource("assets/more_task.png")), size=(24, 24))
-
-
-class DraggableTask(ctk.CTkFrame):
-    def __init__(self, master, text, id, app):
-        super().__init__(master, border_width=2)
-        self.grid_columnconfigure(2, weight=1)
-        self.grid_rowconfigure(2, weight=1)
-        self.app = app
-        self.text = text
-        self.id = id
-
-        self.label = ctk.CTkLabel(self, text=text, wraplength=150, anchor="e", justify="left", font=FONT)
-        self.label.grid(row=0, column=0, rowspan=5, padx=16, pady=8, sticky="nsw")
-
-        self.edit_button = ctk.CTkButton(self, text="", image=EDIT_IMG, command=self.edit_task, width=48)
-        self.edit_button.grid(row=1, column=1, padx=8, pady=(8, 4), sticky="e", columnspan=2)
-
-        self.delete_button = ctk.CTkButton(self, text="", image=DELETE_IMG, command=self.delete, width=48)
-        self.delete_button.grid(row=2, column=1, padx=8, pady=(4, 8), sticky="e", columnspan=2)
-
-        self.dummy_task = None
-        self.last_column = None
-
-        self.setup_bindings(self.label)
-        self.setup_bindings(self)
-
-    def setup_bindings(self, widget, drag=True):
-        if drag:
-            widget.bind("<ButtonPress-1>", self.start_drag)
-            widget.bind("<ButtonRelease-1>", self.stop_drag)
-            widget.bind("<B1-Motion>", self.on_drag)
-
-    def save(self, current_column):
-        database.add_task(self.text, current_column, self.app.kanban_id)
-        print("SAVED")
-
-    def edit_task(self):
-        task_dialog = TaskDialog(self, "Edit Task", "Enter the new task description:", "Save edit")
-        task_dialog.update()
-        task_dialog.focus()
-        self.wait_window(task_dialog)
-        if task_dialog.task_text:
-            database.modify_task(self.id, task_dialog.task_text)
-            self.label.configure(text=task_dialog.task_text)
-            self.text = task_dialog.task_text
-
-    def edit(self, current_column):
-        database.modify_task(self.id, self.text, current_column)
-
-    def delete(self):
-        database.delete_task(self.text)
-        self.app.fade_out(self.winfo_id())
-        self.destroy()
-
-    def get_position(self):
-        pointer_x = self.winfo_pointerx()
-        pointer_y = self.winfo_pointery()
-
-        # Get the app window's top-left corner position relative to the screen
-        app_x = self.app.winfo_rootx()
-        app_y = self.app.winfo_rooty()
-
-        # Calculate the position relative to the app window
-        relative_x = pointer_x - app_x
-        relative_y = pointer_y - app_y
-        return relative_x, relative_y
-
-    def start_drag(self, event):
-        self.drag_start_x = event.x
-        self.drag_start_y = event.y
-
-        self.initial_master = self.master
-        self.lift()
-
-        # Create a dummy task to follow the mouse during dragging
-
-        self.dummy = ctk.CTkFrame(self.app, width=self.winfo_width(), height=self.winfo_height(), border_width=2)
-        self.dummy.grid_columnconfigure(2, weight=1)
-        self.dummy.grid_rowconfigure(2, weight=1)
-        self.label = ctk.CTkLabel(self.dummy, text=self.text, wraplength=150, anchor="e", justify="left", font=FONT)
-        self.label.grid(row=0, column=0, rowspan=5, padx=16, pady=8, sticky="nsw")
-        self.edit_button = ctk.CTkButton(self.dummy, text="", image=EDIT_IMG, width=48)
-        self.edit_button.grid(row=1, column=1, padx=8, pady=(8, 4), sticky="e", columnspan=2)
-        self.delete_button = ctk.CTkButton(self.dummy, text="", image=DELETE_IMG, width=48)
-        self.delete_button.grid(row=2, column=1, padx=8, pady=(4, 8), sticky="e", columnspan=2)
-        pywinstyles.set_opacity(self.dummy.winfo_id(), value=0.5)
-        self.dummy.place(x=self.get_position()[0] - self.drag_start_x,
-                         y=self.get_position()[1] - self.drag_start_y)
-
-    def get_current_column(self):
-        x = self.app.winfo_pointerx() - self.app.winfo_rootx()
-        y = self.app.winfo_pointery() - self.app.winfo_rooty()
-        for column in self.app.columns:
-            if column.winfo_x() <= x <= column.winfo_x() + column.winfo_width():
-                if self.dummy_task is None:
-                    self.dummy_task = DraggableTask(column.task_frame, self.text, self.id, self)  # Create a new task
-                    self.dummy_task.pack(fill="x", padx=5, pady=2)  # Pack the task into the new column
-                    pywinstyles.set_opacity(self.dummy_task.winfo_id(), value=0.7)
-                elif self.dummy_task is not None and self.last_column != column.title:
-                    self.dummy_task.destroy()
-                    self.dummy_task = None
-                elif self.dummy_task is not None and self.last_column == column.title:
-                    pass
-                else:
-                    self.dummy_task.destroy()
-                    self.dummy_task = None
-                self.last_column = column.title
-                self.update()
-
-    def on_drag(self, event):
-        self.dummy.place(x=self.get_position()[0] - self.drag_start_x,
-                         y=self.get_position()[1] - self.drag_start_y)  # Move the dummy to follow the cursor
-        self.get_current_column()
-
-    def stop_drag(self, event):
-        # After stopping the drag, handle the drop and remove the dummy
-        try:
-            self.dummy.destroy()
-            self.dummy = None
-            self.dummy_task.destroy()
-            self.dummy_task = None
-            self.app.handle_drop(self, event)
-        except Exception as e:
-            print(f"Error: {e}")
-
-class KanbanColumn(ctk.CTkFrame):
-    def __init__(self, master, title, app):
-        super().__init__(master, corner_radius=10)
-        self.app = app
-        self.title = title
-
-        self.title_label = ctk.CTkLabel(self, text=title, font=BOLD_FONT)
-        self.title_label.pack(pady=10)
-
-        self.task_frame = ctk.CTkScrollableFrame(self)
-        self.task_frame.pack(fill="both", expand=True, padx=4, pady=4)
-
-        self.add_task_button = ctk.CTkButton(self, text="Add Task", image=ADD_IMG, command=self.add_task, font=FONT)
-        self.add_task_button.pack(pady=10)
-
-    def add_task(self):
-        task_dialog = TaskDialog(self, "Add Task", "Enter task description:", "Add")
-        task_dialog.update()
-        task_dialog.focus()
-        self.wait_window(task_dialog)
-        if task_dialog.task_text:
-            id = database.add_task(task_dialog.task_text, self.title, self.app.kanban_id)
-            if id:
-                task = DraggableTask(self.task_frame, task_dialog.task_text, id, self.app)
-                task.pack(fill="x", padx=5, pady=2)
-                self.app.fade_in(task.winfo_id())
-
-
-class TaskDialog(ctk.CTkToplevel):
-    def __init__(self, parent, title, description, button_text):
-        super().__init__(parent)
-        self.title(title)
-        self.geometry("300x150")
-        self.task_text = None
-
-        self.label = ctk.CTkLabel(self, text=description)
-        self.label.pack(pady=10)
-
-        self.entry = ctk.CTkEntry(self, width=200)
-        self.entry.pack(pady=10)
-
-        self.button = ctk.CTkButton(self, text=button_text, command=self.on_add)
-        self.button.pack(pady=10)
-
-    def on_add(self):
-        self.task_text = self.entry.get()
-        self.destroy()
+from animation import fade_in, fade_out
+from setting import *
+from ui.ctk_column import KanbanColumn
+from ui.ctk_dialog import TaskDialog
+from ui.ctk_task import DraggableTask
 
 
 class App(ctk.CTk):
@@ -200,61 +17,86 @@ class App(ctk.CTk):
         self.geometry("800x600")
         self.resizable(True, True)
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
-
         global FONT
         FONT = ctk.CTkFont(family="Poppins", size=16)
         global BOLD_FONT
         BOLD_FONT = ctk.CTkFont(family="Poppins", size=16, weight="bold")
 
+        def drop_func(file):
+            print(file)
+
+        pywinstyles.apply_dnd(self.winfo_id(), drop_func)
+
         database.initialize_database()
 
         self.create_menu_bar()
 
-        self.create_kanban(1)
+        self.create_kanban(database.get_current_kanban())
 
     def rename_kanban(self, kanban_id):
-        task_dialog = TaskDialog(self, "Rename Kanban", "Enter the new name:", "Save edit")
+        task_dialog = TaskDialog(
+            self, "Rename Kanban", "Enter the new name:", "Save edit"
+        )
         task_dialog.update()
-        task_dialog.focus()
         self.wait_window(task_dialog)
-        if task_dialog.task_text:
-            database.modify_kanban(kanban_id, task_dialog.task_text)
-            self.title(f'Kanban - {task_dialog.task_text}')
+        if task_dialog.task_title:
+            database.modify_kanban(kanban_id, task_dialog.task_title)
+            self.title(f"Kanban - {task_dialog.task_title}")
+            self.create_submenu()
 
     def delete_kanban(self, kanban_id):
         database.delete_kanban(kanban_id)
         self.destroy_columns()
+        if database.get_kanbans():
+            self.create_kanban(database.get_kanbans()[0][0])
+        else:
+            self.create_new_kanban()
+        self.create_submenu()
 
     def create_kanban(self, kanban_id):
+        # Create the columns and tasks
         self.columns = []
-        columns_names = database.get_columns(kanban_id)
-        print(f'columns_names: {columns_names}')
-        print(f'kanban_id: {kanban_id}')
-        print(f'self.columns: {self.columns}')
-        for i, column_name in enumerate(columns_names):
+        self.tasks = []
+        list_of_columns = database.get_columns(kanban_id)
+        for i, column_name in enumerate(list_of_columns):
             self.columns.append(KanbanColumn(self, column_name[1], self))
             for tasks in database.get_tasks(column_name[0]):
-                print(f'tasks: {tasks}')
-                print(f'column_name: {column_name}')
-                print(f'i: {i}')
-                task = DraggableTask(self.columns[i].task_frame, tasks[1], tasks[0], self)
+                task = DraggableTask(
+                    master=self.columns[i].task_frame,
+                    text=tasks[1],
+                    content=tasks[2],
+                    id=tasks[0],
+                    app=self,
+                )
                 task.pack(fill="x", padx=5, pady=2)
+                self.tasks.append(task)
+                pywinstyles.set_opacity(task.winfo_id(), value=0.0)
+
+        # Set the grid layout for the columns
         for i, column in enumerate(self.columns):
             column.grid(row=1, column=i, padx=4, pady=4, sticky="nsew")
             pywinstyles.set_opacity(column.winfo_id(), value=0.0)
             self.grid_columnconfigure(i, weight=1)
         self.grid_rowconfigure(1, weight=1)
+
+        # Fade in the columns and tasks
         for column in self.columns:
-            self.fade_in(column.winfo_id())
+            fade_in(self, column.winfo_id())
+        for task in self.tasks:
+            fade_in(self, task.winfo_id())
+
+        # Set the kanban ID and update the title
         self.kanban_id = kanban_id
-        self.title(f'Kanban - {database.get_kanban_name(kanban_id)}')
+        self.title(f"Kanban - {database.get_kanban_name(kanban_id)}")
         self.file_button.configure(text=database.get_kanban_name(kanban_id))
+        database.update_current_kanban(kanban_id)
+        self.create_submenu()
 
     def destroy_columns(self):
         print(self.columns)
         if self.columns is not None:
             for column in self.columns:
-                self.fade_out(column.winfo_id())
+                fade_out(self, column.winfo_id())
                 column.destroy()
                 self.columns = []
 
@@ -263,17 +105,16 @@ class App(ctk.CTk):
         self.create_kanban(kanban_id)
 
     def create_new_kanban(self):
-        task_dialog = TaskDialog(self, "Create Kanban", "Enter the name of the new kanban:", "Create")
-        task_dialog.update()
-        task_dialog.focus()
+        task_dialog = TaskDialog(
+            self, "Create Kanban", "Enter the name of the new kanban:", "Create"
+        )
         self.wait_window(task_dialog)
-        if task_dialog.task_text:
-            kanban_id = database.create_kanban(task_dialog.task_text)
+        if task_dialog.task_title:
+            kanban_id = database.create_kanban(task_dialog.task_title)
             database.create_column("To Do", kanban_id)
             database.create_column("In Progress", kanban_id)
             database.create_column("Done", kanban_id)
-            for column in self.columns:
-                column.destroy()
+            self.destroy_columns()
             self.create_kanban(kanban_id)
 
     def handle_drop(self, task, event):
@@ -283,12 +124,14 @@ class App(ctk.CTk):
         for column in self.columns:
             if column.winfo_x() <= x <= column.winfo_x() + column.winfo_width():
                 print("IN A COLUMN", column.title)
-                self.fade_out(task.winfo_id())
+                fade_out(self, task.winfo_id())
                 task.place_forget()  # Remove it from the current place
                 task.pack_forget()  # Remove it from the current pack geometry manager
-                task = DraggableTask(column.task_frame, task.text, task.id, self)  # Create a new task
+                task = DraggableTask(
+                    column.task_frame, task.text, task.content, task.id, self
+                )  # Create a new task
                 task.pack(fill="x", padx=5, pady=2)  # Pack the task into the new column
-                self.fade_in(task.winfo_id())
+                fade_in(self, task.winfo_id())
                 task.edit(column.title)
                 break
         else:
@@ -299,37 +142,34 @@ class App(ctk.CTk):
     def on_closing(self):
         self.destroy()
 
-    def create_menu_bar(self):
-        self.file_button = ctk.CTkButton(self, text=database.get_kanban_name(1), font=FONT)
-        self.file_button.grid(row=0, column=0, padx=4, pady=4, sticky="nsew")
-        dropdown1 = CustomDropdownMenu(widget=self.file_button)
-        dropdown1.add_option(option="New KanBan", command=self.create_new_kanban)
-
-        submenu = dropdown1.add_submenu(submenu_name="Open KanBan")
+    def create_submenu(self):
+        for option in self.submenu._options_list:
+            option.destroy()
         for kanban in database.get_kanbans():
-            submenu.add_option(option=kanban[1], command=lambda e=kanban[0]: self.switch_kanban(e))
+            self.submenu.add_option(
+                option=kanban[1], command=lambda e=kanban[0]: self.switch_kanban(e)
+            )
 
-        dropdown1.add_option(option="Rename current Kanban", command=lambda: self.rename_kanban(self.kanban_id))
+    def create_menu_bar(self):
+        self.file_button = ctk.CTkButton(self, text="Kanban", font=FONT)
+        self.file_button.grid(row=0, column=0, padx=4, pady=4, sticky="nsew")
+        self.dropdown = CustomDropdownMenu(widget=self.file_button)
+        self.dropdown.add_option(option="New KanBan", command=self.create_new_kanban)
 
-        dropdown1.add_option(option="Delete current Kanban", command=lambda: self.delete_kanban(self.kanban_id))
+        self.submenu = self.dropdown.add_submenu(submenu_name="Open KanBan")
+        self.create_submenu()
 
-        dropdown1.add_option(option="Quit", command=lambda: self.on_closing())
+        self.dropdown.add_option(
+            option="Rename current Kanban",
+            command=lambda: self.rename_kanban(self.kanban_id),
+        )
 
-    def fade_out(self, widget, from_=100, to=0):
-        for i in range(from_, to, -10):
-            if not self.winfo_exists():
-                break
-            pywinstyles.set_opacity(widget, value=i / 100)
-            self.update()
-            time.sleep(1 / 100)
+        self.dropdown.add_option(
+            option="Delete current Kanban",
+            command=lambda: self.delete_kanban(self.kanban_id),
+        )
 
-    def fade_in(self, widget, from_=0, to=100):
-        for i in range(from_, to, 10):
-            if not self.winfo_exists():
-                break
-            pywinstyles.set_opacity(widget, value=i / 100)
-            self.update()
-            time.sleep(1 / 100)
+        self.dropdown.add_option(option="Quit", command=lambda: self.on_closing())
 
 
 if __name__ == "__main__":
