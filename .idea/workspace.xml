@@ -4,21 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54de9c10-b255-44b5-86e9-0e5d28b94e58" name="Changes" comment="animation suppression et addition de kanban">
-      <change afterPath="$PROJECT_DIR$/animation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/icon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/output/PyKanBan.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/setting.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/ctk_calender.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/ctk_column.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/ctk_dialog.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/ctk_kanban.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/ctk_task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/PyKanBan.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PyKanBan.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="54de9c10-b255-44b5-86e9-0e5d28b94e58" name="Changes" comment="Refactoring de la base du project pour un meilleur futur + préparation pour l'ajout de futur features">
+      <change afterPath="$PROJECT_DIR$/output/PyKanBan V0.1.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/output/PyKanBan v0.2.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/output/auto-py-to-exe-config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/output/database/PyKanBan.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/PyKanBan.exe" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +26,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -198,7 +191,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729456225380</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Refactoring de la base du project pour un meilleur futur + préparation pour l'ajout de futur features">
+      <option name="closed" value="true" />
+      <created>1729857585993</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1729857585993</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -218,6 +219,7 @@
     <MESSAGE value="premier commit avec toute la base du project (foncitonnelle)" />
     <MESSAGE value="deuxieme commit avec quelque modif" />
     <MESSAGE value="animation suppression et addition de kanban" />
-    <option name="LAST_COMMIT_MESSAGE" value="animation suppression et addition de kanban" />
+    <MESSAGE value="Refactoring de la base du project pour un meilleur futur + préparation pour l'ajout de futur features" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring de la base du project pour un meilleur futur + préparation pour l'ajout de futur features" />
   </component>
 </project>
