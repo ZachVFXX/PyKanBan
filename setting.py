@@ -19,6 +19,8 @@ def resource(relative_path: str) -> str:
     return os.path.join(base_path, relative_path)
 
 
+LOGO_PATH = resource("assets/icon.ico")
+
 EDIT_IMG = ctk.CTkImage(Image.open(resource("assets/edit_task.png")), size=(24, 24))
 DELETE_IMG = ctk.CTkImage(Image.open(resource("assets/delete_task.png")), size=(24, 24))
 ADD_IMG = ctk.CTkImage(Image.open(resource("assets/add_task.png")), size=(24, 24))

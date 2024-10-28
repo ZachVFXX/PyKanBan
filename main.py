@@ -17,6 +17,7 @@ class App(ctk.CTk):
         self.geometry("800x600")
         self.resizable(True, True)
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.iconbitmap(LOGO_PATH)
         global FONT
         FONT = ctk.CTkFont(family="Poppins", size=16)
         global BOLD_FONT
