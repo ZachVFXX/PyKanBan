@@ -22,9 +22,16 @@ class App(ctk.CTk):
 
         database.initialize_database()
 
-        self.create_menu_bar()
-
-        self.create_kanban(database.get_current_kanban())
+        try:
+            self.create_menu_bar()
+            self.create_kanban(database.get_current_kanban())
+        except Exception as e:
+            if "command: application has been destroyed" in str(e):
+                print("Kanban creation cancelled by the user")
+            else:
+                print(
+                    f"Error: While creating the kanban, please retry or contact me on github with the error message : \n {str(e)}"
+                )
 
     def rename_kanban(self, kanban_id):
         task_dialog = TaskDialog(
