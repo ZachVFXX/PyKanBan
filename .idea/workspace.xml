@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54de9c10-b255-44b5-86e9-0e5d28b94e58" name="Changes" comment="Added icon for the frame">
+    <list default="true" id="54de9c10-b255-44b5-86e9-0e5d28b94e58" name="Changes" comment="Si vous ouvrez le fichier python depuis un autre dir, la database ce créer à l'endroit ou le fichier python est, et pas à l'endroit ou il est appeler">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/PyKanBan.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/PyKanBan.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ctk_column.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ctk_column.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ctk_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ctk_dialog.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ctk_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ctk_task.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,7 +208,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730148764701</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Si vous ouvrez le fichier python depuis un autre dir, la database ce créer à l'endroit ou le fichier python est, et pas à l'endroit ou il est appeler">
+      <option name="closed" value="true" />
+      <created>1730460494395</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1730460494395</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -226,6 +238,7 @@
     <MESSAGE value="animation suppression et addition de kanban" />
     <MESSAGE value="Refactoring de la base du project pour un meilleur futur + préparation pour l'ajout de futur features" />
     <MESSAGE value="Added icon for the frame" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added icon for the frame" />
+    <MESSAGE value="Si vous ouvrez le fichier python depuis un autre dir, la database ce créer à l'endroit ou le fichier python est, et pas à l'endroit ou il est appeler" />
+    <option name="LAST_COMMIT_MESSAGE" value="Si vous ouvrez le fichier python depuis un autre dir, la database ce créer à l'endroit ou le fichier python est, et pas à l'endroit ou il est appeler" />
   </component>
 </project>

@@ -17,15 +17,8 @@ class App(ctk.CTk):
         self.resizable(True, True)
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.iconbitmap(LOGO_PATH)
-        global FONT
-        FONT = ctk.CTkFont(family="Poppins", size=16)
-        global BOLD_FONT
-        BOLD_FONT = ctk.CTkFont(family="Poppins", size=16, weight="bold")
-
-        def drop_func(file):
-            print(file)
-
-        pywinstyles.apply_dnd(self.winfo_id(), drop_func)
+        self.FONT = ctk.CTkFont(family="Poppins", size=16)
+        self.BOLD_FONT = ctk.CTkFont(family="Poppins", size=16, weight="bold")
 
         database.initialize_database()
 
@@ -64,7 +57,6 @@ class App(ctk.CTk):
                 task = DraggableTask(
                     master=self.columns[i].task_frame,
                     text=tasks[1],
-                    content=tasks[2],
                     id=tasks[0],
                     app=self,
                 )
@@ -128,7 +120,7 @@ class App(ctk.CTk):
                 task.place_forget()  # Remove it from the current place
                 task.pack_forget()  # Remove it from the current pack geometry manager
                 task = DraggableTask(
-                    column.task_frame, task.text, task.content, task.id, self
+                    column.task_frame, task.text, task.id, self
                 )  # Create a new task
                 task.pack(fill="x", padx=5, pady=2)  # Pack the task into the new column
                 fade_in(self, task.winfo_id())
@@ -151,7 +143,7 @@ class App(ctk.CTk):
             )
 
     def create_menu_bar(self):
-        self.file_button = ctk.CTkButton(self, text="Kanban", font=FONT)
+        self.file_button = ctk.CTkButton(self, text="Kanban", font=self.FONT)
         self.file_button.grid(row=0, column=0, padx=4, pady=4, sticky="nsew")
         self.dropdown = CustomDropdownMenu(widget=self.file_button)
         self.dropdown.add_option(option="New KanBan", command=self.create_new_kanban)

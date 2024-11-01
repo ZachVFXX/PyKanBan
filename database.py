@@ -34,7 +34,6 @@ def create_database():
         """CREATE TABLE IF NOT EXISTS Task
                       (id INTEGER PRIMARY KEY AUTOINCREMENT,
                        title TEXT NOT NULL,
-                       content TEXT,
                        created_at TEXT NOT NULL)"""
     )
 
@@ -266,7 +265,7 @@ def delete_column(column_id):
         conn.close()
 
 
-def add_task(title: str, content: str, column_name: str, kanban_id: int):
+def add_task(title: str, column_name: str, kanban_id: int):
     """Add a new task to the database, associating it with the specified column."""
     conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
@@ -284,8 +283,8 @@ def add_task(title: str, content: str, column_name: str, kanban_id: int):
     print(date.today())
     # Insert the task into the Task table
     cursor.execute(
-        "INSERT INTO Task (title, content, created_at) VALUES (?, ?, ?)",
-        (title, content, date.today()),
+        "INSERT INTO Task (title, created_at) VALUES (?, ?)",
+        (title, date.today()),
     )
     task_id = cursor.lastrowid
 
@@ -312,7 +311,7 @@ def get_tasks(column_id=None):
         # Get tasks associated with a specific column
         cursor.execute(
             """
-            SELECT Task.id, Task.title, Task.content, Task.created_at
+            SELECT Task.id, Task.title, Task.created_at
             FROM Task
             INNER JOIN TaskColumnLink ON Task.id = TaskColumnLink.task_id
             INNER JOIN KanbanColumn ON TaskColumnLink.column_id = KanbanColumn.id
@@ -322,7 +321,7 @@ def get_tasks(column_id=None):
         )
     else:
         # Get all tasks from all columns
-        cursor.execute("SELECT id, title, content, created_at FROM Task")
+        cursor.execute("SELECT id, title, created_at FROM Task")
 
     tasks = cursor.fetchall()
     conn.close()
@@ -343,7 +342,7 @@ def get_task_by_id(task_id):
     return task
 
 
-def modify_task(task_id, new_title=None, new_content=None, new_column_name=None):
+def modify_task(task_id, new_title=None, new_column_name=None):
     """Modify a task's text or column in the database.
 
     Args:
@@ -363,12 +362,6 @@ def modify_task(task_id, new_title=None, new_content=None, new_column_name=None)
             # Update the task text
             cursor.execute(
                 "UPDATE Task SET title = ? WHERE id = ?", (new_title, task_id)
-            )
-
-        if new_content:
-            # Update the task content
-            cursor.execute(
-                "UPDATE Task SET content = ? WHERE id = ?", (new_content, task_id)
             )
 
         if new_column_name:

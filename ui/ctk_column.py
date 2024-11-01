@@ -28,15 +28,12 @@ class KanbanColumn(ctk.CTkFrame):
         self.add_task_button.pack(pady=10)
 
     def add_task(self):
-        task_dialog = TaskDialog(
-            self, "Add Task", "Enter task description:", "Add", content=" "
-        )
+        task_dialog = TaskDialog(self, "Add Task", "Enter task description:", "Add")
         task_dialog.update()
         self.wait_window(task_dialog)
         if task_dialog.task_title:
             id = database.add_task(
                 title=task_dialog.task_title,
-                content=task_dialog.task_content,
                 column_name=self.title,
                 kanban_id=self.app.kanban_id,
             )
@@ -44,7 +41,6 @@ class KanbanColumn(ctk.CTkFrame):
                 task = DraggableTask(
                     master=self.task_frame,
                     text=task_dialog.task_title,
-                    content=task_dialog.task_content,
                     id=id,
                     app=self.app,
                 )

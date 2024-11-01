@@ -11,22 +11,19 @@ class DraggableTask(ctk.CTkFrame):
     A task that can be dragged and dropped into a Kanban column.
     """
 
-    def __init__(self, master, text, content, id, app):
+    def __init__(self, master, text, id, app):
         super().__init__(master, border_width=2)
         self.grid_columnconfigure(2, weight=1)
         self.grid_rowconfigure(2, weight=1)
         self.app = app
         self.text = text
         self.id = id
-        self.content = content
 
-        global FONT
-        FONT = ctk.CTkFont(family="Poppins", size=16)
-        global BOLD_FONT
-        BOLD_FONT = ctk.CTkFont(family="Poppins", size=16, weight="bold")
+        self.FONT = ctk.CTkFont(family="Poppins", size=16)
+        self.BOLD_FONT = ctk.CTkFont(family="Poppins", size=16, weight="bold")
 
         self.label = ctk.CTkLabel(
-            self, text=text, wraplength=150, anchor="e", justify="left", font=FONT
+            self, text=text, wraplength=150, anchor="e", justify="left", font=self.FONT
         )
         self.label.grid(row=0, column=0, rowspan=5, padx=16, pady=8, sticky="nsw")
 
@@ -44,33 +41,13 @@ class DraggableTask(ctk.CTkFrame):
             row=2, column=1, padx=8, pady=(4, 8), sticky="e", columnspan=2
         )
 
-        self.content_box = None
-
         self.dummy_task = None
         self.last_column = None
 
         self.setup_bindings(self.label)
         self.setup_bindings(self)
 
-    def task_info(self):
-        if self.content_box is not None:
-            self.content_box.destroy()
-            self.content_box = None
-        elif self.content is not None:
-            self.content_box = ctk.CTkLabel(
-                self,
-                text=self.content,
-                wraplength=150,
-                anchor="e",
-                justify="left",
-                font=FONT,
-            )
-            self.content_box.grid(
-                row=3, column=0, rowspan=5, padx=16, pady=8, sticky="nsw"
-            )
-
     def setup_bindings(self, widget):
-        widget.bind("<Double-Button-1>", lambda event: self.task_info())
         widget.bind("<ButtonPress-1>", self.start_drag)
         widget.bind("<ButtonRelease-1>", self.stop_drag)
         widget.bind("<B1-Motion>", self.on_drag)
@@ -81,7 +58,6 @@ class DraggableTask(ctk.CTkFrame):
             "Edit Task",
             "Enter the new task description:",
             "Save edit",
-            self.content,
         )
         task_dialog.update()
         self.wait_window(task_dialog)
@@ -89,15 +65,11 @@ class DraggableTask(ctk.CTkFrame):
             database.modify_task(task_id=self.id, new_title=task_dialog.task_title)
             self.label.configure(text=task_dialog.task_title)
             self.text = task_dialog.task_title
-        if task_dialog.task_content:
-            database.modify_task(task_id=self.id, new_content=task_dialog.task_content)
-            self.content = task_dialog.task_content
 
     def edit(self, current_column):
         database.modify_task(
             task_id=self.id,
             new_title=self.text,
-            new_content=self.content,
             new_column_name=current_column,
         )
 
@@ -142,7 +114,7 @@ class DraggableTask(ctk.CTkFrame):
             wraplength=150,
             anchor="e",
             justify="left",
-            font=FONT,
+            font=self.FONT,
         )
         self.label.grid(row=0, column=0, rowspan=5, padx=16, pady=8, sticky="nsw")
         self.edit_button = ctk.CTkButton(self.dummy, text="", image=EDIT_IMG, width=48)
@@ -170,7 +142,6 @@ class DraggableTask(ctk.CTkFrame):
                     self.dummy_task = DraggableTask(
                         master=column.task_frame,
                         text=self.text,
-                        content=self.content,
                         id=self.id,
                         app=self,
                     )  # Create a new task
