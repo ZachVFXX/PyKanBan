@@ -1,8 +1,15 @@
 import os
 import sqlite3
 from datetime import date
+import sys
 
-DATABASE_PATH = "database/PyKanBan.db"
+DIR_PATH = os.path.dirname(sys.argv[0])
+print(DIR_PATH)
+FILE_PATH = os.path.join(DIR_PATH, "database")
+print(FILE_PATH)
+NAME = "PyKanBan.db"
+DATABASE_PATH = os.path.join(DIR_PATH, FILE_PATH, NAME)
+print(DATABASE_PATH)
 
 
 def initialize_database():
@@ -16,8 +23,8 @@ def initialize_database():
 
 
 def create_database():
-    if not os.path.exists("database"):
-        os.makedirs("database")
+    if not os.path.exists(FILE_PATH):
+        os.makedirs(FILE_PATH)
 
     conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()

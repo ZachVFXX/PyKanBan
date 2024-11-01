@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54de9c10-b255-44b5-86e9-0e5d28b94e58" name="Changes" comment="Refactoring de la base du project pour un meilleur futur + préparation pour l'ajout de futur features">
-      <change afterPath="$PROJECT_DIR$/output/PyKanBan V0.1.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/output/PyKanBan v0.2.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/output/auto-py-to-exe-config.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/output/database/PyKanBan.db" afterDir="false" />
+    <list default="true" id="54de9c10-b255-44b5-86e9-0e5d28b94e58" name="Changes" comment="Added icon for the frame">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/PyKanBan.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +127,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-975db3bf15a3-31b6be0877a2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.18034.82" />
+        <option value="bundled-python-sdk-d7ad00fb9fc3-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.23726.102" />
       </set>
     </attachedChunks>
   </component>
@@ -199,7 +196,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729857585993</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added icon for the frame">
+      <option name="closed" value="true" />
+      <created>1730148764701</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1730148764701</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -220,6 +225,7 @@
     <MESSAGE value="deuxieme commit avec quelque modif" />
     <MESSAGE value="animation suppression et addition de kanban" />
     <MESSAGE value="Refactoring de la base du project pour un meilleur futur + préparation pour l'ajout de futur features" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring de la base du project pour un meilleur futur + préparation pour l'ajout de futur features" />
+    <MESSAGE value="Added icon for the frame" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added icon for the frame" />
   </component>
 </project>

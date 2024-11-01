@@ -1,7 +1,6 @@
 from CTkMenuBar import CustomDropdownMenu
 import pywinstyles
 import database
-
 from animation import fade_in, fade_out
 from setting import *
 from ui.ctk_column import KanbanColumn
