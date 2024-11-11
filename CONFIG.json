@@ -1,0 +1,85 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "noconfirm",
+   "value": true
+  },
+  {
+   "optionDest": "filenames",
+   "value": "C:/Users/Zach/PycharmProjects/PyKanBan/main.py"
+  },
+  {
+   "optionDest": "onefile",
+   "value": true
+  },
+  {
+   "optionDest": "console",
+   "value": false
+  },
+  {
+   "optionDest": "name",
+   "value": "PyKanBan.v0.2.exe"
+  },
+  {
+   "optionDest": "clean_build",
+   "value": false
+  },
+  {
+   "optionDest": "strip",
+   "value": false
+  },
+  {
+   "optionDest": "noupx",
+   "value": false
+  },
+  {
+   "optionDest": "disable_windowed_traceback",
+   "value": false
+  },
+  {
+   "optionDest": "uac_admin",
+   "value": false
+  },
+  {
+   "optionDest": "uac_uiaccess",
+   "value": false
+  },
+  {
+   "optionDest": "argv_emulation",
+   "value": false
+  },
+  {
+   "optionDest": "bootloader_ignore_signals",
+   "value": false
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Zach/AppData/Local/Programs/Python/Python312/Lib/site-packages/customtkinter;customtkinter/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Zach/PycharmProjects/PyKanBan/assets;assets/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Zach/PycharmProjects/PyKanBan/ui;ui/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Zach/PycharmProjects/PyKanBan/animation.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Zach/PycharmProjects/PyKanBan/database.py;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Zach/PycharmProjects/PyKanBan/setting.py;."
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}

@@ -4,14 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54de9c10-b255-44b5-86e9-0e5d28b94e58" name="Changes" comment="Si vous ouvrez le fichier python depuis un autre dir, la database ce créer à l'endroit ou le fichier python est, et pas à l'endroit ou il est appeler">
+    <list default="true" id="54de9c10-b255-44b5-86e9-0e5d28b94e58" name="Changes" comment="Ui tweak">
+      <change afterPath="$PROJECT_DIR$/.python-version" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CONFIG.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/settings.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uv.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PyKanBan.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PyKanBan.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/PyKanBan.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/PyKanBan.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/ctk_column.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ctk_column.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/ctk_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ctk_dialog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/ctk_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/ctk_task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/animation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/add_task.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/add_task.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/delete_task.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/delete_task.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/edit_task.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/edit_task.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/icon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/more_task.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/more_task.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/PyKanBan.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/PyKanBan.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/setting.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/setting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ctk_calender.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ctk_column.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/ctk_column.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ctk_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/ctk_dialog.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ctk_kanban.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/ctk_kanban.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/ctk_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/ctk_task.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +88,8 @@
       <recent name="C:\Users\hxcke\PycharmProjects\PyKanBan\assets" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Zach\PycharmProjects\PyKanBan\src\ui" />
+      <recent name="C:\Users\Zach\PycharmProjects\PyKanBan\src" />
       <recent name="C:\Users\hxcke\PycharmProjects\PyKanBan\output\database" />
       <recent name="C:\Users\hxcke\PycharmProjects\PyKanBan\ui" />
       <recent name="C:\Users\hxcke\PycharmProjects\PyKanBan\database" />
@@ -90,7 +109,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/database.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Zach\PycharmProjects\PyKanBan\src\database.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -112,7 +131,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Zach\PycharmProjects\PyKanBan\src\main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -216,8 +235,35 @@
       <option name="project" value="LOCAL" />
       <updated>1730460494395</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Remove de la feature content">
+      <option name="closed" value="true" />
+      <created>1730461849494</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1730461849494</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Ajout d'un try execpt pour eviter d'avoir une erreur quand on ferme l'application trop rapidement après l'ouverture">
+      <option name="closed" value="true" />
+      <created>1730462236712</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1730462236712</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Ui tweak">
+      <option name="closed" value="true" />
+      <created>1730462867523</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1730462867523</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.ini" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -239,6 +285,9 @@
     <MESSAGE value="Refactoring de la base du project pour un meilleur futur + préparation pour l'ajout de futur features" />
     <MESSAGE value="Added icon for the frame" />
     <MESSAGE value="Si vous ouvrez le fichier python depuis un autre dir, la database ce créer à l'endroit ou le fichier python est, et pas à l'endroit ou il est appeler" />
-    <option name="LAST_COMMIT_MESSAGE" value="Si vous ouvrez le fichier python depuis un autre dir, la database ce créer à l'endroit ou le fichier python est, et pas à l'endroit ou il est appeler" />
+    <MESSAGE value="Remove de la feature content" />
+    <MESSAGE value="Ajout d'un try execpt pour eviter d'avoir une erreur quand on ferme l'application trop rapidement après l'ouverture" />
+    <MESSAGE value="Ui tweak" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ui tweak" />
   </component>
 </project>

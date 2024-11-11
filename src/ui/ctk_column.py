@@ -1,17 +1,17 @@
-import customtkinter as ctk
+from customtkinter import ThemeManager
 
-import database
-from animation import fade_in
-from setting import *
-from ui.ctk_dialog import TaskDialog
-from ui.ctk_task import DraggableTask
+from src.animation import fade_in
+from src.setting import *
+from src.ui.ctk_dialog import TaskDialog
+from src.ui.ctk_task import DraggableTask
 
 
 class KanbanColumn(ctk.CTkFrame):
-    def __init__(self, master, title, app):
+    def __init__(self, master, title, app, db):
         super().__init__(master, corner_radius=10)
         self.app = app
         self.title = title
+        self.db = db
 
         FONT = ctk.CTkFont(family="Poppins", size=16)
         BOLD_FONT = ctk.CTkFont(family="Poppins", size=16, weight="bold")
@@ -32,7 +32,7 @@ class KanbanColumn(ctk.CTkFrame):
         task_dialog.update()
         self.wait_window(task_dialog)
         if task_dialog.task_title:
-            id = database.add_task(
+            id = self.db.add_task(
                 title=task_dialog.task_title,
                 column_name=self.title,
                 kanban_id=self.app.kanban_id,
@@ -43,6 +43,7 @@ class KanbanColumn(ctk.CTkFrame):
                     text=task_dialog.task_title,
                     id=id,
                     app=self.app,
+                    db=self.db,
                 )
                 task.pack(fill="x", padx=5, pady=2)
                 fade_in(self, task.winfo_id())

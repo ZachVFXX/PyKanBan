@@ -1,9 +1,9 @@
 import pywinstyles
 
-import database
-from animation import fade_out
-from setting import *
-from ui.ctk_dialog import TaskDialog
+from src import database
+from src.animation import fade_out
+from src.setting import *
+from src.ui.ctk_dialog import TaskDialog
 
 
 class DraggableTask(ctk.CTkFrame):
@@ -11,13 +11,14 @@ class DraggableTask(ctk.CTkFrame):
     A task that can be dragged and dropped into a Kanban column.
     """
 
-    def __init__(self, master, text, id, app):
+    def __init__(self, master, text, id, app, db):
         super().__init__(master, border_width=2)
         self.grid_columnconfigure(2, weight=1)
         self.grid_rowconfigure(2, weight=1)
         self.app = app
         self.text = text
         self.id = id
+        self.db = db
 
         self.FONT = ctk.CTkFont(family="Poppins", size=16)
         self.BOLD_FONT = ctk.CTkFont(family="Poppins", size=16, weight="bold")
@@ -62,19 +63,19 @@ class DraggableTask(ctk.CTkFrame):
         task_dialog.update()
         self.wait_window(task_dialog)
         if task_dialog.task_title:
-            database.modify_task(task_id=self.id, new_title=task_dialog.task_title)
+            self.db.modify_task(task_id=self.id, new_title=task_dialog.task_title)
             self.label.configure(text=task_dialog.task_title)
             self.text = task_dialog.task_title
 
     def edit(self, current_column):
-        database.modify_task(
+        self.db.modify_task(
             task_id=self.id,
             new_title=self.text,
             new_column_name=current_column,
         )
 
     def delete(self):
-        database.delete_task(self.text)
+        self.db.delete_task(self.text)
         fade_out(self, self.winfo_id())
         self.destroy()
 
@@ -144,6 +145,7 @@ class DraggableTask(ctk.CTkFrame):
                         text=self.text,
                         id=self.id,
                         app=self,
+                        db=self.db,
                     )  # Create a new task
                     self.dummy_task.pack(
                         fill="x", padx=5, pady=2
